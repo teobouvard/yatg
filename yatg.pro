@@ -17,15 +17,23 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs depr
 
 SOURCES += \
     src/main.cpp \
-    src/mainwindow.cpp
+    src/mainwindow.cpp \
+    src/openglwindow.cpp \
+    src/vertex.cpp
 
 HEADERS += \
-    yatg/mainwindow.hpp
-
-FORMS += \
-    ui/mainwindow.ui
+    yatg/mainwindow.hpp \
+    yatg/openglwindow.hpp \
+    yatg/vertex.hpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    resources.qrc
+
+DISTFILES += \
+    shaders/simple.frag \
+    shaders/simple.vert
