@@ -1,11 +1,10 @@
 #pragma once
-#include "yatg/transform3d.hpp"
 #include <QMatrix4x4>
 #include <QOpenGLBuffer>
+#include <QOpenGLShaderProgram>
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLWindow>
-
-class QOpenGLShaderProgram;
+#include <yatg/terrain.hpp>
 
 class OpenGLWindow : public QOpenGLWindow {
   Q_OBJECT
@@ -17,8 +16,11 @@ public:
   void resizeGL(int w, int h);
   void paintGL();
 
-protected slots:
-  void update();
+  // protected slots:
+  // void update();
+private:
+  void init_shaders();
+  void init_gl_options();
 
 private:
   // OpenGL state information
@@ -26,12 +28,12 @@ private:
   QOpenGLVertexArrayObject m_object;
   QOpenGLShaderProgram *m_program;
 
-  // Shader Information
-  int u_modelToWorld;
-  int u_worldToView;
+  // Transformations
   QMatrix4x4 m_projection;
-  Transform3D m_transform;
+
+  // Object data
+  Terrain *m_terrain;
 
   // Private debug helper
-  void printContext();
+  void print_context();
 };

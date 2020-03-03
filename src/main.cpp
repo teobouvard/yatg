@@ -1,9 +1,4 @@
 #include "yatg/openglwindow.hpp"
-
-#ifndef QT_DEBUG
-#include <QDebug>
-#endif
-
 #include <QApplication>
 
 int main(int argc, char *argv[]) {
@@ -18,7 +13,8 @@ int main(int argc, char *argv[]) {
 
   OpenGLWindow w;
   w.setFormat(format);
-  w.resize(QSize(800, 600));
+  w.resize(800, 600);
   w.show();
+
   return a.exec();
 }

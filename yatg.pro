@@ -18,13 +18,11 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs depr
 SOURCES += \
     src/main.cpp \
     src/openglwindow.cpp \
-    src/transform3d.cpp \
-    src/vertex.cpp
+    src/terrain/terrain.cpp
 
 HEADERS += \
     yatg/openglwindow.hpp \
-    yatg/transform3d.hpp \
-    yatg/vertex.hpp
+    yatg/terrain.hpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

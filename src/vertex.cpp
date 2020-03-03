@@ -1,1 +1,0 @@
-#include "yatg/vertex.hpp"
