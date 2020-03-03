@@ -1,4 +1,4 @@
-#include "mainwindow.hpp"
+#include "yatg/mainwindow.hpp"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)

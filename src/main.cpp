@@ -1,4 +1,4 @@
-#include "mainwindow.hpp"
+#include "yatg/mainwindow.hpp"
 
 #include <QApplication>
 

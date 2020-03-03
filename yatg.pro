@@ -20,7 +20,7 @@ SOURCES += \
     src/mainwindow.cpp
 
 HEADERS += \
-    include/mainwindow.hpp
+    yatg/mainwindow.hpp
 
 FORMS += \
     ui/mainwindow.ui
