@@ -5,10 +5,10 @@
 #include <QString>
 
 OpenGLWindow::OpenGLWindow() {
-  m_terrain = new Terrain(100);
+  m_terrain = new Terrain(5);
   m_program = new QOpenGLShaderProgram();
 
-  m_projection.translate(0, 0, -5);
+  // m_projection.translate(0, 0, -5);
 
   connect(this, SIGNAL(frameSwapped()), this, SLOT(update()));
 }
@@ -21,7 +21,6 @@ OpenGLWindow::~OpenGLWindow() {
 
 void OpenGLWindow::initializeGL() {
   print_context();
-
   init_shaders();
   init_gl_options();
 }
@@ -43,8 +42,17 @@ void OpenGLWindow::init_gl_options() {
 }
 
 void OpenGLWindow::resizeGL(int w, int h) {
-  (void)w;
-  (void)h;
+  // Calculate aspect ratio
+  qreal aspect = qreal(w) / qreal(h ? h : 1);
+
+  // Set near plane to 3.0, far plane to 7.0, field of view 45 degrees
+  const qreal zNear = 3.0, zFar = 7.0, fov = 45.0;
+
+  // Reset projection
+  m_projection.setToIdentity();
+
+  // Set perspective projection
+  m_projection.perspective(fov, aspect, zNear, zFar);
 }
 
 // void OpenGLWindow::update() { update(); }
@@ -53,8 +61,13 @@ void OpenGLWindow::paintGL() {
   // Clear color and depth buffer
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+  // Calculate model view transformation
+  QMatrix4x4 matrix;
+  matrix.translate(0.0, 0.0, -10.0);
+  // matrix.rotate(rotation);
+
   // Set modelview-projection matrix
-  m_program->setUniformValue("mvp_matrix", m_projection);
+  m_program->setUniformValue("mvp_matrix", m_projection * matrix);
 
   // Draw cube geometry
   m_terrain->draw(m_program);

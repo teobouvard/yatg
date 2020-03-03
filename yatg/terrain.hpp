@@ -1,5 +1,7 @@
 #pragma once
+#include <QOpenGLBuffer>
 #include <QOpenGLShaderProgram>
+#include <QVector3D>
 #include <QVector>
 
 class Terrain {
@@ -8,6 +10,9 @@ public:
   void draw(QOpenGLShaderProgram *program);
 
 private:
-  int m_size;
-  QVector<QVector<int>> m_grid;
+  QOpenGLBuffer b_vertices;
+  QOpenGLBuffer b_indices;
+
+  QVector<QVector3D> m_grid;
+  QVector<QVector3D> m_indices;
 };
