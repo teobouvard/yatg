@@ -1,4 +1,3 @@
-#include "yatg/mainwindow.hpp"
 #include "yatg/openglwindow.hpp"
 
 #ifndef QT_DEBUG

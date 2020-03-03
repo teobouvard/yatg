@@ -17,13 +17,13 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs depr
 
 SOURCES += \
     src/main.cpp \
-    src/mainwindow.cpp \
     src/openglwindow.cpp \
+    src/transform3d.cpp \
     src/vertex.cpp
 
 HEADERS += \
-    yatg/mainwindow.hpp \
     yatg/openglwindow.hpp \
+    yatg/transform3d.hpp \
     yatg/vertex.hpp
 
 # Default rules for deployment.
