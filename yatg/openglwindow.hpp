@@ -1,8 +1,7 @@
 #pragma once
+
 #include <QMatrix4x4>
-#include <QOpenGLBuffer>
 #include <QOpenGLShaderProgram>
-#include <QOpenGLVertexArrayObject>
 #include <QOpenGLWindow>
 #include <yatg/terrain.hpp>
 
@@ -24,12 +23,10 @@ private:
 
 private:
   // OpenGL state information
-  QOpenGLBuffer m_vertex;
-  QOpenGLVertexArrayObject m_object;
   QOpenGLShaderProgram *m_program;
 
   // Transformations
-  QMatrix4x4 m_projection;
+  QMatrix4x4 projection;
 
   // Object data
   Terrain *m_terrain;
