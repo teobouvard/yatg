@@ -1,6 +1,6 @@
-QT       += core gui
+QT += core gui widgets 3dcore 3drender 3dinput 3dlogic 3dextras 3danimation
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4)
 
 CONFIG += c++11
 
@@ -10,28 +10,19 @@ CONFIG += c++11
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
 
-# You can also make your code fail to compile if it uses deprecated APIs.
-# In order to do so, uncomment the following line.
-# You can also select to disable deprecated APIs only up to a certain version of Qt.
-DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+INCLUDEPATH += $$PWD/include
 
 SOURCES += \
     src/main.cpp \
-    src/openglwindow.cpp \
-    src/terrain/terrain.cpp
+    src/mainwindow.cpp \
+    src/renderwidget.cpp
 
 HEADERS += \
-    yatg/openglwindow.hpp \
-    yatg/terrain.hpp
+    include/yatg/mainwindow.hpp \
+    include/yatg/renderwidget.hpp \
+    include/yatg/ui.hpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
-
-RESOURCES += \
-    resources.qrc
-
-DISTFILES += \
-    shaders/simple.frag \
-    shaders/simple.vert
