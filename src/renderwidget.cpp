@@ -1,4 +1,4 @@
-#include <yatg/renderwidget.hpp>
+#include <yatt/renderwidget.hpp>
 
 #include <QGridLayout>
 
@@ -40,13 +40,13 @@ RenderWidget::RenderWidget(QWidget *parent) : QWidget(parent) {
   double far = 1000.0;
   Qt3DRender::QCamera *cameraEntity = view->camera();
   cameraEntity->lens()->setPerspectiveProjection(fov, aspect, near, far);
-  cameraEntity->setPosition(QVector3D(100, 100, 15));
-  cameraEntity->setUpVector(QVector3D(0, 0, 1));
+  // cameraEntity->setPosition(QVector3D(100, 100, 15));
   connect(ground_, SIGNAL(centerChanged(QVector3D)), cameraEntity,
-          SLOT(setViewCenter(QVector3D)));
+          SLOT(setPosition(QVector3D)));
 
   // camera controls
-  auto *camController = new Qt3DExtras::QOrbitCameraController(rootEntity);
+  auto *camController =
+      new Qt3DExtras::QFirstPersonCameraController(rootEntity);
   camController->setCamera(cameraEntity);
 
   // light

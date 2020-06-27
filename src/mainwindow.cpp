@@ -1,6 +1,6 @@
-#include <yatg/mainwindow.hpp>
-#include <yatg/renderwidget.hpp>
-#include <yatg/ui.hpp>
+#include <yatt/mainwindow.hpp>
+#include <yatt/renderwidget.hpp>
+#include <yatt/ui.hpp>
 
 #include <QGridLayout>
 #include <QMainWindow>

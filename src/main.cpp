@@ -1,4 +1,4 @@
-#include <yatg/mainwindow.hpp>
+#include <yatt/mainwindow.hpp>
 
 #include <QtWidgets>
 

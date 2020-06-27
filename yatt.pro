@@ -19,10 +19,10 @@ SOURCES += \
     src/renderwidget.cpp
 
 HEADERS += \
-    include/yatg/ground.hpp \
-    include/yatg/mainwindow.hpp \
-    include/yatg/renderwidget.hpp \
-    include/yatg/ui.hpp
+    include/yatt/ground.hpp \
+    include/yatt/mainwindow.hpp \
+    include/yatt/renderwidget.hpp \
+    include/yatt/ui.hpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

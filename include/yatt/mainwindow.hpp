@@ -1,6 +1,6 @@
 #pragma once
 
-#include <yatg/renderwidget.hpp>
+#include <yatt/renderwidget.hpp>
 
 #include <QGridLayout>
 #include <QMainWindow>
