@@ -4,6 +4,7 @@
 
 #include <QGridLayout>
 #include <QMainWindow>
+#include <QObject>
 #include <QWidget>
 
 class MainWindow : public QMainWindow {
@@ -13,9 +14,4 @@ public:
   virtual ~MainWindow();
 
 private:
-  QGridLayout *layout_;
-
-  // widgets
-  QWidget *container_;
-  RenderWidget *renderWidget_;
 };

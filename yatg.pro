@@ -13,11 +13,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 INCLUDEPATH += $$PWD/include
 
 SOURCES += \
+    src/ground.cpp \
     src/main.cpp \
     src/mainwindow.cpp \
     src/renderwidget.cpp
 
 HEADERS += \
+    include/yatg/ground.hpp \
     include/yatg/mainwindow.hpp \
     include/yatg/renderwidget.hpp \
     include/yatg/ui.hpp

@@ -8,8 +8,8 @@
 #include <QWidget>
 
 /**
- * @brief MainWindow::MainWindow
- * @param parent
+ * @brief MainWindow::MainWindow creates the main window of the application
+ * @param parent is the parent widget
  */
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
   // set initial window size
@@ -19,22 +19,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
   this->setWindowTitle(ui::MAINWINDOW_NAME);
 
   // use central widget as global container
-  container_ = new QWidget(this);
-  layout_ = new QGridLayout(container_);
-  this->setCentralWidget(container_);
+  QWidget *container = new QWidget(this);
+  this->setCentralWidget(container);
+  QGridLayout *layout = new QGridLayout(container);
+  layout->setSpacing(0);
+  layout->setMargin(0);
 
   // create widgets
-  renderWidget_ = new RenderWidget(this);
+  RenderWidget *renderWidget = new RenderWidget(this);
 
   // add widgets to layout
+  layout->addWidget(renderWidget, 0, 0, 1, 1);
 }
 
 /**
- * @brief MainWindow::~MainWindow
+ * @brief MainWindow::~MainWindow destructs the main window of the application
  */
-MainWindow::~MainWindow() {
-  delete layout_;
-
-  delete container_;
-  delete renderWidget_;
-}
+MainWindow::~MainWindow() {}
