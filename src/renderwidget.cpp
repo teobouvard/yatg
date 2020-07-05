@@ -1,6 +1,6 @@
 #include <yatt/renderwidget.hpp>
 
-#include <QGridLayout>
+#include <igclib/race.hpp>
 
 #include <QCamera>
 #include <QColor>
@@ -9,6 +9,7 @@
 #include <QEntity>
 #include <QFirstPersonCameraController>
 #include <QForwardRenderer>
+#include <QGridLayout>
 #include <QOrbitCameraController>
 #include <QPointLight>
 #include <QRgb>
@@ -32,22 +33,32 @@ RenderWidget::RenderWidget(QWidget *parent) : QWidget(parent) {
   // ground
   ground_ = new Ground(rootEntity);
 
+  std::string task =
+      "/home/arthurdent/dev/igclib/tests/data/task/xctrack_1.xctsk";
+  std::string flights = "/home/arthurdent/dev/igclib/tests/data/race/1_all";
+  // Race race(flights, task);
+
   // camera
   // TODO package different cameras
   double fov = 90.0;
   double aspect = 16.0 / 9.0;
   double near = 0.1;
-  double far = 1000.0;
-  Qt3DRender::QCamera *cameraEntity = view->camera();
-  cameraEntity->lens()->setPerspectiveProjection(fov, aspect, near, far);
-  // cameraEntity->setPosition(QVector3D(100, 100, 15));
-  connect(ground_, SIGNAL(centerChanged(QVector3D)), cameraEntity,
-          SLOT(setPosition(QVector3D)));
+  double far = 10000.0;
+  camera_ = view->camera();
+  camera_->lens()->setPerspectiveProjection(fov, aspect, near, far);
+  camera_->setPosition(QVector3D(0, 1000, 0));
+  // connect(ground_, SIGNAL(centerChanged(QVector3D)), cameraEntity,
+  // SLOT(setPosition(QVector3D)));
+  // connect(ground_, SIGNAL(centerChanged(QVector3D)), cameraEntity,
+  //        SLOT(setViewCenter(QVector3D)));
+  // QObject::connect(ground_, SIGNAL(centerChanged(QVector3D)), this,
+  // SLOT(viewGround()));
 
   // camera controls
   auto *camController =
       new Qt3DExtras::QFirstPersonCameraController(rootEntity);
-  camController->setCamera(cameraEntity);
+  camController->setLinearSpeed(camController->linearSpeed() * 100);
+  camController->setCamera(camera_);
 
   // light
   // TODO package as Sun
@@ -57,15 +68,20 @@ RenderWidget::RenderWidget(QWidget *parent) : QWidget(parent) {
   light->setIntensity(2);
   lightEntity->addComponent(light);
   Qt3DCore::QTransform *lightTransform = new Qt3DCore::QTransform(lightEntity);
-  lightTransform->setTranslation(cameraEntity->position());
+  lightTransform->setTranslation(QVector3D(0, 1000, 0));
   lightEntity->addComponent(lightTransform);
 
   // widget layout
-  QGridLayout *layout_ = new QGridLayout(this);
+  auto layout_ = new QGridLayout(this);
   layout_->setMargin(0);
   layout_->setSpacing(0);
   this->setLayout(layout_);
   layout_->addWidget(container, 0, 0, 1, 1);
+}
+
+void RenderWidget::viewGround() {
+  camera_->viewEntity(ground_);
+  camera_->tiltAboutViewCenter(20);
 }
 
 /**

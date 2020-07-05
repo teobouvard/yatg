@@ -11,6 +11,11 @@ public:
   explicit RenderWidget(QWidget *parent = nullptr);
   virtual ~RenderWidget();
 
+protected slots:
+  void viewGround();
+
 private:
+  Qt3DRender::QCamera *camera_;
+
   Ground *ground_;
 };

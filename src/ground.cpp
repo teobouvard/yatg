@@ -19,30 +19,30 @@
 Ground::Ground(Qt3DCore::QNode *parent) : Qt3DCore::QEntity(parent) {
   // mesh
   mesh_ = new Qt3DRender::QMesh(this);
-  mesh_->setSource(
-      QUrl::fromLocalFile("/home/arthurdent/dev/yatt/assets/ecrins.stl"));
+  QUrl meshFile =
+      QUrl::fromLocalFile("/home/arthurdent/dev/srtm2stl/test/tile.stl");
+  // // QUrl::fromLocalFile("/home/arthurdent/Downloads/terrain.stl");
+  mesh_->setSource(meshFile);
   QObject::connect(mesh_, SIGNAL(statusChanged(Status)), this,
-                   SLOT(connectGeometry()));
+                   SLOT(geometryStatusChanged()));
 
   // plane mesh transform
-  Qt3DCore::QTransform *planeTransform = new Qt3DCore::QTransform(this);
-  planeTransform->setScale(1.0f);
-  planeTransform->setRotation(
+  auto meshTransform = new Qt3DCore::QTransform(this);
+  meshTransform->setRotation(
       QQuaternion::fromAxisAndAngle(QVector3D(-1.0f, 0.0f, 0.0f), 90.0f));
-  // planeTransform->setTranslation(QVector3D(0.0f, 0.0f, 0.0f));
 
   // material
-  auto *material = new Qt3DExtras::QGoochMaterial(this);
-  // material->setDiffuse(QColor("grey"));
+  // auto material = new Qt3DExtras::QGoochMaterial(this);
+  auto material = new Qt3DExtras::QPhongMaterial(this);
+  material->setDiffuse(QColor("grey"));
 
   // create entity
   this->addComponent(mesh_);
   this->addComponent(material);
-  this->addComponent(planeTransform);
+  this->addComponent(meshTransform);
 }
 
-void Ground::printSource(const QUrl &source) { qDebug() << source; }
-
+/*
 void Ground::computeCenter() {
   auto geometry = mesh_->geometry();
   auto min = geometry->minExtent();
@@ -50,14 +50,29 @@ void Ground::computeCenter() {
   auto center = (min + max) / 2.0;
   emit centerChanged(center);
   qDebug("Center : %f %f %f", center.x(), center.y(), center.z());
-}
+}*/
 
-void Ground::connectGeometry() {
-  if (mesh_->status() == Qt3DRender::QMesh::Ready) {
+void Ground::geometryStatusChanged() {
+  switch (mesh_->status()) {
+  case Qt3DRender::QMesh::None: {
+    qDebug("No mesh");
+    break;
+  }
+  case Qt3DRender::QMesh::Loading: {
+    qDebug("Loading mesh");
+    break;
+  }
+  case Qt3DRender::QMesh::Ready: {
     qDebug("Mesh loaded");
     connect(mesh_->geometry(), SIGNAL(minExtentChanged(const QVector3D &)),
-            this, SLOT(computeCenter()));
+            this, SIGNAL(minExtentChanged(const QVector3D &)));
     connect(mesh_->geometry(), SIGNAL(maxExtentChanged(const QVector3D &)),
-            this, SLOT(computeCenter()));
+            this, SIGNAL(maxExtentChanged(const QVector3D &)));
+    break;
+  }
+  case Qt3DRender::QMesh::Error: {
+    qDebug("Error loading mesh");
+    break;
+  }
   }
 }
